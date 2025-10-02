@@ -1,6 +1,8 @@
 package com.example.springai.config;
 
+import com.example.springai.advisor.TokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,6 +11,8 @@ public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(ChatClient.Builder chatClient) {
         return chatClient
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .defaultAdvisors(new TokenUsageAuditAdvisor())
                 .defaultSystem("""
                         You are an internal IT assistant. Your role is to help \s
                         employees with Questions related to IT policies,Such as \s
